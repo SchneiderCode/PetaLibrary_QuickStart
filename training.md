@@ -257,8 +257,10 @@ Understanding PetaLibrary policies ensures your data remains secure and your tea
 
 <div style="width:40%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 2.5%;" >
 
+
 Who is the recommended owner of a PetaLibrary Allocation?
 
+<!-- data-solution-button="off" -->
 [( )] Lead Graduate Student
 [(X)] Primary Investigator (PI)
 [( )] Department's SpeedType Manager
@@ -305,6 +307,8 @@ PetaLibrary offers different storage tiers tailored to specific research data li
 <details>
 <summary>Active Tier</summary>
 
+<div style="margin-left:5px;margin-right:5px">
+
 **Active allocations** are the most performant and are configured for direct compute access from environments like Alpine and Blanca.
 
 <!-- data-sortable="false" -->
@@ -315,6 +319,8 @@ PetaLibrary offers different storage tiers tailored to specific research data li
 | Accessible from Compute Nodes | Yes, Alpine & Blanca | 
 | SMB Mount Supported | Yes | 
 | Data Compression | lz4 | 
+
+</div>
 
 > [!TIP] 
 > *For computationally intensive workflows,* consider pairing an active tier allocation with `/scratch` and `$SLURM_SCRATCH`. This will provide you the long-term storage benefits of PetaLibrary with the increased speed of the scratch directories.  
@@ -327,6 +333,10 @@ PetaLibrary offers different storage tiers tailored to specific research data li
 <details>
 <summary>Archive Tier</summary>
 
+<!--- Note: Margin is needed here because the detail's tag is set to hide overflow,
+      which results in cropped content.  --->
+<div style="margin-left:5px;margin-right:5px">
+
 **Archive allocations** are configured to maximize data integrity over performance. They are not accessible from compute nodes, though they can be accessed interactively on login nodes.
 
 <!-- data-sortable="false" -->
@@ -338,7 +348,7 @@ PetaLibrary offers different storage tiers tailored to specific research data li
 | SMB Mount Supported | No | 
 | Data Compression | zstd | 
 
-
+</div>
 
 </details>
 
@@ -346,6 +356,8 @@ PetaLibrary offers different storage tiers tailored to specific research data li
 
 <details>
 <summary> Active+Archive Tier</summary>
+
+<div style="margin-left:5px;margin-right:5px">
 
 **Active+Archive allocations** automatically replicate your data from the Active PetaLibrary tier to the Archive tier. Rather than purchasing separate allocations and syncing data yourself, you can buy a single Active+Archive allocation. You get full access to the Active tier, and we handle replication to the Archive tier automatically.
 
@@ -358,6 +370,8 @@ PetaLibrary offers different storage tiers tailored to specific research data li
 | SMB Mount Supported | Yes | 
 | Data Compression | lz4 | 
 
+</div>
+
 > [!IMPORTANT] Important Information on Replication 
 > Active+Archive replication uses [ZFS snapshots](https://curc.readthedocs.io/en/latest/petalibrary/zfs_snapshots.html) to maintain a time-delayed mirror—not an incremental backup—of your Active tier. Because replication syncs snapshot additions and deletions from Active to Archive, aggressively pruning snapshots reduces them on both tiers. While snapshots preserve historical data incrementally, storing copies in two separate physical buildings protects against localized disasters like fire or water damage.
 
@@ -367,6 +381,8 @@ PetaLibrary offers different storage tiers tailored to specific research data li
 
 <details>
 <summary>Archive+DR Tier</summary>
+
+<div style="margin-left:5px;margin-right:5px">
 
 **Archive+DR allocations** expand the archive tier's services by automatically backing up snapshots to an offsite location monthly. Backup and restoration of this data are managed entirely by CURC staff.
 
@@ -379,6 +395,8 @@ PetaLibrary offers different storage tiers tailored to specific research data li
 | SMB Mount Supported | Yes | 
 | Data Compression | lz4 | 
 
+</div>
+
 </details>
 
 
@@ -386,7 +404,69 @@ PetaLibrary offers different storage tiers tailored to specific research data li
 > [!WARNING]
 > Please remember that all PetaLibrary allocations are considered a single copy of your research data. Irreplaceable data must be backed up to a storage device or service outside of PetaLibrary. 
 
----
+### ✏ Knowledge Check
+
+<div style="width:45%; margin: 15px 2.5%; float:left; ">
+
+![Two researchers collaborate in a detailed cartoon data center featuring a central "PETALIBRARY" server. The high-capacity storage hub is smiling, with its side panel clearly showing "PETABYTES 100+ PB" amid other scientific data icons.](img/PetaLibrary_Banner.png)<!-- style="border:solid black 1px; border-radius: 15px;" -->
+
+</div>
+
+
+<div style="width:40%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 2.5%;" >
+
+Andy is running climate models on the Alpine cluster to study how deforestation affects local climates. Which PetaLibrary tiers could he choose to support his data storage and computing needs? (Select all that apply)
+
+<!-- data-solution-button="off" -->
+[[X]] Active
+[[ ]] Archive
+[[X]] Active+Archive
+[[ ]] Archive+DR
+<script>
+let response = ""
+let check = 0
+
+//  Neutral Net
+if (@input[0] == "1") {
+  response += "<b>Active... - Correct!</b> <br> Active allocations are accessible from compute nodes, which make them a great choice for storing research data that will be analyzed and/or processed on the Alpine and Blanca clusters. <br> <br>"
+  check+=1
+} 
+
+//Spreadsheet 
+if (@input[1]  == "1") {
+  response += "<b> Archive... - Not Quite.</b>  <br> Compute nodes cannot directly access archive allocations. This means jobs running on the Alpine and Blanca clusters cannot read data from or write results to an archive allocation.  <br> <br>"
+  check-=1
+} 
+
+// CFD Simulation
+if (@input[2] == "1") {
+  response += "<b>Active+Archive... - Correct!</b> <br> Active allocations are accessible from compute nodes, which make them a great choice for storing research data that will be analyzed and/or processed on the Alpine and Blanca clusters. <br> <br>"
+  check+=1
+} 
+
+// Hosting a website
+if (@input[3] == "1") {
+  response += "<b> Archive+DR... - Not Quite.</b>  <br> The 'DR', or disaster recovery, part of Archive+DR, only provides offsite backups of an archive allocation. It does not provide access to the Alpine or Blanca clusters.  <br> <br>"
+  check-=1
+} 
+
+document.getElementById("tiers_question_responses").innerHTML = response
+
+if (check==2) {
+  let currentDate = new Date();
+  sendData({username: user_name, email: user_email, course:"PL_QUICKSTART_SCORES", question:"TIER_COMPUTE_ACCESS", value: currentDate.toLocaleString()})
+  send.lia("true")
+} else {
+  send.lia("")
+}
+
+"LIA: wait"
+</script>
+
+<div id="tiers_question_responses"></div>
+
+</div>
+<div style="clear:both"></div>
 
 ## Common Data Operations
 
@@ -397,11 +477,16 @@ Once you have access to a PetaLibrary allocation, you will need to start working
 <details>
 <summary>Transferring Data </summary>
 
-* **Globus:** The recommended method for transferring large datasets to and from the PetaLibrary, especially when collaborating across institutions. Refer to the [Globus Documentation](https://curc.readthedocs.io/en/latest/compute/data-transfer.html#globus) for setup instructions.
-* **Command-Line Tools (`rsync`, `scp`, `rcp`):** Ideal for smaller files or direct transfers from CURC login nodes.
-* **SMB Mount:** Allows mounting your active PetaLibrary directory directly to your desktop or laptop for interactive file management.
+<div style="margin-left:5px;margin-right:5px"> 
 
-> **Automated Data Transfers:** For sensor and lab instrument data collection, configure automated transfers using passwordless SSH key authentication. See the [Automated Transfers Guide](https://curc.readthedocs.io/en/latest/compute/data-transfer.html#automated-scp-and-rsync) for security requirements and implementation steps.
+* **Globus:** The recommended method for transferring large datasets to and from PetaLibrary, especially when collaborating across institutions. <br> [Globus Documentation](https://curc.readthedocs.io/en/latest/compute/data-transfer.html#globus) 
+* **Command-Line Tools:** Ideal for smaller files or direct transfers through the data transfer nodes (dtns). <br> [RClone Documentation for PetaLibrary](https://curc.readthedocs.io/en/latest/petalibrary/data_transfer/rclone.html) <br> [Documentation for Command-Line Tools](https://curc.readthedocs.io/en/latest/compute/data-transfer.html#secure-copy-scp) 
+* **SMB Mount:** Allows mounting your active PetaLibrary directory directly to your desktop or laptop for interactive file management. <br> [SMB Documentation](https://curc.readthedocs.io/en/latest/petalibrary/data_transfer/mounting.html)
+
+</div>
+
+> [!NOTE] Automated Data Transfers
+> Research groups that collect data from sensors and lab instruments often need automated workflows to upload files to PetaLibrary as they are generated. You can configure these automated transfers using passwordless SSH key authentication. <br> [Automated Data Transfers Documentation](https://curc.readthedocs.io/en/latest/compute/data-transfer.html#automated-scp-and-rsync) 
 
 </details>
 
@@ -410,10 +495,16 @@ Once you have access to a PetaLibrary allocation, you will need to start working
 <details>
 <summary>Sharing Data </summary>
 
+<div style="margin-left:5px;margin-right:5px">
+<!--- TODO: Rewrite this section--->
 | Sharing Method | Target Audience | Key Requirements & Limitations |
 | :--- | :--- | :--- |
 | **Globus Guest Collections** | External Collaborators | Secure sharing outside CU Boulder without requiring a full campus account. Easy permission management via Globus web app. |
 | **PetaLibrary UNIX Groups** | Internal Collaborators | Requires users to have an active RC Account. Collaborators are added to your allocation's designated UNIX group. |
+
+[Guest Collections Instructions](https://curc.readthedocs.io/en/latest/petalibrary/data_transfer/guestcollection.html)
+
+</div>
 
 > ⚠️ **Note on File Permissions:** Standard POSIX file permissions and group ownership (`chgrp`, `chmod`, `umask`) dictate who can read/write shared directories. Ensure shared folders have group write permissions enabled (`g+w`) so lab members can collaborate seamlessly.
 
@@ -424,12 +515,64 @@ Once you have access to a PetaLibrary allocation, you will need to start working
 <details>
 <summary>Restoring Data </summary>
 
+<div style="margin-left:5px;margin-right:5px">
+
 PetaLibrary maintains automated snapshots of your data in hidden `.snapshot` directories located within your allocation. 
 * **Self-Service Restore:** Navigate into the `.snapshot` directory of the affected folder, locate the desired timestamp, and copy the file back to your working directory. *Reminder: Retained snapshots consume a portion of your allocated storage space.*
 * **Support Request:** If the required snapshot has rotated out or you need assistance with complex restorations, submit a ticket to the University Support Team (UST).
 
+</div>
+
 </details>
 
+### ✏ Knowledge Check
+
+<div style="width:45%; margin: 15px 2.5%; float:left; ">
+
+![Two researchers collaborate in a detailed cartoon data center featuring a central "PETALIBRARY" server. The high-capacity storage hub is smiling, with its side panel clearly showing "PETABYTES 100+ PB" amid other scientific data icons.](img/PetaLibrary_Banner.png)<!-- style="border:solid black 1px; border-radius: 15px;" -->
+
+</div>
+
+
+<div style="width:40%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 2.5%;" >
+
+Meredith needs to upload a research corpus that is roughly 55GB in size to PetaLibrary. What data transfer tool does CURC recommend they use?
+
+<!-- data-solution-button="off" -->
+[( )] Open OnDemand's File Browser
+[( )] CU Boulder's Large File Transfer Service
+[(X)] Globus
+[( )] None of the above
+<script>
+let response = ""
+
+if("@input" === "0" ){
+  response = "<b>Not Quite.</b> <br> While Open OnDemand does include a file browser, it is intended to support relatively small file transfers only, think text files or scripts of code that are only a few KB or MB in size. <br> <br>"
+} else if ("@input" === "1") {
+  response = "<b>Note Quite.</b> <br> CU Boulder's Large File Transfer Service, known called Secure File Transfer, is a niche service intended to support the secure transfer of large files between two parties. It is not connected to PetaLibrary nor does it support data transfers to PetaLibrary. <br> <br>"
+} else if("@input" === "2"){
+  response = "<b>Correct.</b> <br> While a variety of tools can be used, often the most robust option for Research Computing users is Globus. If you are new to managing data transfers, we highly recommend you start with Globus.  <br> <br>"
+} else if("@input" === "3"){
+  response = "<b>Not Quite.</b> <br> A valid data transfer tool is provided. Please try again. <br> <br>"
+}
+
+document.getElementById("data_transfer_question_responses").innerHTML = response
+
+if ("@input" === "2") {
+  let currentDate = new Date();
+  sendData({username: user_name, email: user_email, course:"PL_QUICKSTART_SCORES", question:"DATA_TRANSFER", value: currentDate.toLocaleString()})
+  send.lia("true")
+} else {
+  send.lia("")
+}
+
+"LIA: wait"
+</script>
+
+<div id="data_transfer_question_responses"></div>
+
+</div>
+<div style="clear:both"></div>
 
 
 ## Monitoring Data Usage
@@ -473,8 +616,8 @@ User Statistics:
 	colo0001            2.25T   	158002
 ---------------------------------------------------
 ```
-
-> **If the *.cstats* file ever appears empty, then the allocation is likely full.** You can verify this by running the `df` command.
+> [!NOTE] Empty .cstats File
+> If the *.cstats* file ever appears empty, then the allocation is likely full. You can verify this by running the `df` command.
 
 </details>
 
@@ -484,7 +627,7 @@ User Statistics:
 <summary>**Check disk usage with df**</summary>
 
 
-We recommend using the `df` command, also known as "disk free", to check the data storage usage of an allocation. This command can be run from any login node and can be used to check allocations belonging to any PetaLibrary tier. 
+We recommend using the `df` command, also known as "disk free", to check an allocation's data usage. This command can be run from any login node and can be used with any PetaLibrary tier. 
 
 ``` 
 #Format:  df -H /pl/<tier>/<allocation_name>
@@ -497,6 +640,56 @@ pla-enc9:/srv/pl/active/curc  4.6T  2.4T  2.2T  52% /pl/active/curc
 ```
 
 </details>
+
+
+### ✏ Knowledge Check
+
+<div style="width:45%; margin: 15px 2.5%; float:left; ">
+
+![Two researchers collaborate in a detailed cartoon data center featuring a central "PETALIBRARY" server. The high-capacity storage hub is smiling, with its side panel clearly showing "PETABYTES 100+ PB" amid other scientific data icons.](img/PetaLibrary_Banner.png)<!-- style="border:solid black 1px; border-radius: 15px;" -->
+
+</div>
+
+
+<div style="width:40%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 2.5%;" >
+
+In checking his lab's allocation usage, Zane notices that the .cstats file it is completely blank. What does this likely mean?
+
+<!-- data-solution-button="off" -->
+[( )] The hourly report has not run yet.
+[( )] Zane's access to the allocation has been revoked.
+[( )] Someone accidentally deleted the .cstats file's content.
+[(X)] The allocation is likely full.
+<script>
+let response = ""
+
+if("@input" === "0" ){
+  response = "<b>Not Quite.</b> <br>  <br> <br>"
+} else if ("@input" === "1") {
+  response = "<b>Note Quite.</b> <br>  <br> <br>"
+} else if("@input" === "2"){
+  response = "<b>Note Quite.</b> <br>   <br> <br>"
+} else if("@input" === "3"){
+  response = "<b>Correct!</b> <br> While the .cstats file is fairly small, only a few KB in size, if an allocation is full then the system will be unable to properly update .cstats and result in an empty file. If this happens, please reach out to User Support for guidance through the <a href='https://colorado.service-now.com/req_portal?id=ucb_sc_rc_form'>online help form</a>. <br> <br>"
+}
+
+document.getElementById("data_usage_question_responses").innerHTML = response
+
+if ("@input" === "3") {
+  let currentDate = new Date();
+  sendData({username: user_name, email: user_email, course:"PL_QUICKSTART_SCORES", question:"DATA_USAGE", value: currentDate.toLocaleString()})
+  send.lia("true")
+} else {
+  send.lia("")
+}
+
+"LIA: wait"
+</script>
+
+<div id="data_usage_question_responses"></div>
+
+</div>
+<div style="clear:both"></div>
 
 
 ## Managing an Allocation
@@ -536,10 +729,14 @@ Owners can transfer primary ownership of an allocation to another eligible facul
 <details>
 <summary>Offboarding Collaborators and Managing Access</summary>
 
+<div style="margin-left:5px;margin-right:5px">
+
 When a collaborator or student leaves the university, take prompt action to secure data and transition responsibilities:
 * Request updates to UNIX group file permissions to revoke access for departed members.
 * Transfer ownership of specific files or datasets if another researcher is taking over lead analysis.
 * **POI Accounts:** If an external or departed collaborator still requires ongoing access, establish a University Person of Interest (POI) account to maintain authorized access securely.
+
+</div>
 
 </details>
 
