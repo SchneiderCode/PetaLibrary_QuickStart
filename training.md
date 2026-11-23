@@ -508,17 +508,22 @@ Once you have access to a PetaLibrary allocation, you will need to start working
 <summary>Sharing Data </summary>
 
 <div style="margin-left:5px;margin-right:5px">
-<!--- TODO: Rewrite this section--->
-| Sharing Method | Target Audience | Key Requirements & Limitations |
-| :--- | :--- | :--- |
-| **Globus Guest Collections** | External Collaborators | Secure sharing outside CU Boulder without requiring a full campus account. Easy permission management via Globus web app. |
-| **PetaLibrary UNIX Groups** | Internal Collaborators | Requires users to have an active RC Account. Collaborators are added to your allocation's designated UNIX group. |
 
-[Guest Collections Instructions](https://curc.readthedocs.io/en/latest/petalibrary/data_transfer/guestcollection.html)
+*How* a PetaLibrary allocation's data is shared depends primarily on *who* it is being shared with. Specifically, whether the collaborator is internal or external to Research Computing. 
+
+**Internal Collaborators** 
+
+* **Definition:** Anyone who is able to request a Research Computing account. This includes researchers from the University of Colorado Boulder, University of Colorado Anschutz, and any institution in the [Rocky Mountain Advanced Computing Consortium (RMACC)](https://www.colorado.edu/partnerships/rmacc/about). 
+* **Sharing Method: ** Submit a help ticket with the User Support Team and request that the internal collaborator be added to the allocation's Linux group. All files and directories shared with the group will be accessible to the collaborator. See [Workspace Sharing](https://curc.readthedocs.io/en/latest/compute/filesystems.html#workspace-sharing) for additional information on Linux groups.<br> 
+
+**External Collaborators**
+
+* **Definition:** This encompasses any researcher who is unable to acquire a Research Computing account. 
+* **Sharing Method:** Globus Guest Collections (formerly known as “Shared Endpoints”) enable PetaLibrary customers to share a given folder in a PetaLibrary active or archive allocation with anyone – regardless of whether they have a CURC account – simply by using their email address. Additional information can be found in the [Globus Guest Collection Guide](https://curc.readthedocs.io/en/latest/petalibrary/data_transfer/guestcollection.html).
+
+
 
 </div>
-
-> ⚠️ **Note on File Permissions:** Standard POSIX file permissions and group ownership (`chgrp`, `chmod`, `umask`) dictate who can read/write shared directories. Ensure shared folders have group write permissions enabled (`g+w`) so lab members can collaborate seamlessly.
 
 </details>
 
@@ -529,9 +534,14 @@ Once you have access to a PetaLibrary allocation, you will need to start working
 
 <div style="margin-left:5px;margin-right:5px">
 
-PetaLibrary maintains automated snapshots of your data in hidden `.snapshot` directories located within your allocation. 
-* **Self-Service Restore:** Navigate into the `.snapshot` directory of the affected folder, locate the desired timestamp, and copy the file back to your working directory. *Reminder: Retained snapshots consume a portion of your allocated storage space.*
-* **Support Request:** If the required snapshot has rotated out or you need assistance with complex restorations, submit a ticket to the University Support Team (UST).
+PetaLibrary maintains automated snapshots of an allocation's data. This enables users to recover data that they have unintentionally deleted or modified, during a specified retention period. Every PetaLibrary allocation has snapshots enabled by default.
+
+**Key Details**
+
+ * **Impact on Storage:**  Snapshots count towards an allocation's storage quota. Removing a file will only free storage space if no snapshots reference the file. 
+* **Retention Period:** Snapshots, by default, are created every 15 minutes and last for 7 days. This means a file can be recovered up to 7 days after it has been deleted. Full details can be found in the [default snapshot schedule page](https://curc.readthedocs.io/en/latest/petalibrary/zfs_snapshots.html#default-snapshot-schedule).  
+ * **Restoring Snapshot Files:** A snapshot's files are stored in a read-only, time-stamped subdirectory of an allocation. You can find instructions for viewing snapshots in the [data recovery guide](https://curc.readthedocs.io/en/latest/petalibrary/zfs_snapshots.html#data-recovery).
+
 
 </div>
 
