@@ -877,7 +877,7 @@ Please provide any comments you would like to share with us on this course:
 <script>
   let feedback= `@input`
   feedback = feedback.replace(/(\r\n|\n|\r)/g, "_"); //Google Script wont accept breaks, must replace with "_" to ensure the data is received/saved.
-  sendData({username: user_name, email: user_email, course:"PETALIBRARY_SCORES", question:"COMMENTS", value: feedback})
+  sendData({username: user_name, email: user_email, course:"PL_QUICKSTART_SCORES", question:"COMMENTS", value: feedback})
   send.lia("Feedback Sent", [], false)
   "LIA: wait"
 </script>
