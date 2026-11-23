@@ -207,23 +207,6 @@ Institutional email address:
   "LIA: wait"
 </script>
 
-<!--- 
-* Flow: key policies review, allocation tiers, common tasks and processes
-* Feedback on “Troubleshooting Advice” header:
-    * Rename to “Common Tasks and Processes” so users don’t skip it
-    * Use action-based headers (e.g. “Restoring Missing Data” not “Missing Data”)
-
-
-* Topics to include under Common Tasks and Processes:
-    * Check status of my allocation (covers cstats)
-    * Modify my allocation (increase, decrease, etc.)
-    * Snapshots (tied to allocation full scenarios)
-    * Collaborator left university: frame as offboarding guidance
-* Plan: use Gemini/AI to generate quick blurbs per section to speed up drafting
-
-
-* Todo - Expand each section a bit, create a few diagrams, and then add in questions. 
---->
 
 
 Understanding PetaLibrary policies ensures your data remains secure and your team retains seamless access.
@@ -248,15 +231,7 @@ Understanding PetaLibrary policies ensures your data remains secure and your tea
 
 ### ✏ Knowledge Check
 
-<div style="width:45%; margin: 15px 2.5%; float:left; ">
-
-![Two researchers collaborate in a detailed cartoon data center featuring a central "PETALIBRARY" server. The high-capacity storage hub is smiling, with its side panel clearly showing "PETABYTES 100+ PB" amid other scientific data icons.](img/PetaLibrary_Banner.png)<!-- style="border:solid black 1px; border-radius: 15px;" -->
-
-</div>
-
-
-<div style="width:40%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 2.5%;" >
-
+<div style="width:80%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 10%;" >
 
 Who is the recommended owner of a PetaLibrary Allocation?
 
@@ -306,7 +281,7 @@ if ("@input" === "1") {
   "LIA: wait"
 </script>
 
-PetaLibrary offers different storage tiers tailored to specific research data lifecycles. Below you will find a brief overview of each tier and notes on their key features. For a more detailed comparison, please see [CURC's PetaLibrary documentation](https://curc.readthedocs.io/en/latest/petalibrary/allocation_types.html)
+PetaLibrary offers different storage tiers tailored to specific research data life cycles. Below you will find a brief overview of each tier and notes on their key features. For a more detailed comparison, please see [CURC's PetaLibrary documentation](https://curc.readthedocs.io/en/latest/petalibrary/allocation_types.html)
 
 <br>
 
@@ -412,14 +387,7 @@ PetaLibrary offers different storage tiers tailored to specific research data li
 
 ### ✏ Knowledge Check
 
-<div style="width:45%; margin: 15px 2.5%; float:left; ">
-
-![Two researchers collaborate in a detailed cartoon data center featuring a central "PETALIBRARY" server. The high-capacity storage hub is smiling, with its side panel clearly showing "PETABYTES 100+ PB" amid other scientific data icons.](img/PetaLibrary_Banner.png)<!-- style="border:solid black 1px; border-radius: 15px;" -->
-
-</div>
-
-
-<div style="width:40%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 2.5%;" >
+<div style="width:80%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 10%;" >
 
 Andy is running climate models on the Alpine cluster to study how deforestation affects local climates. Which PetaLibrary tiers could he choose to support his data storage and computing needs? (Select all that apply)
 
@@ -549,14 +517,7 @@ PetaLibrary maintains automated snapshots of an allocation's data. This enables 
 
 ### ✏ Knowledge Check
 
-<div style="width:45%; margin: 15px 2.5%; float:left; ">
-
-![Two researchers collaborate in a detailed cartoon data center featuring a central "PETALIBRARY" server. The high-capacity storage hub is smiling, with its side panel clearly showing "PETABYTES 100+ PB" amid other scientific data icons.](img/PetaLibrary_Banner.png)<!-- style="border:solid black 1px; border-radius: 15px;" -->
-
-</div>
-
-
-<div style="width:40%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 2.5%;" >
+<div style="width:80%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 10%;" >
 
 Meredith needs to upload a research corpus that is roughly 55GB in size to PetaLibrary. What data transfer tool does CURC recommend they use?
 
@@ -730,7 +691,7 @@ let response = ""
 if("@input" === "0" ){
   response = "<b>Not Quite.</b> <br> As long as appropriate file permissions are set, any member of a PetaLibrary allocation may create, edit, or even delete files. <br> <br>"
 } else if ("@input" === "1") {
-  response = "<b>Correct!</b> <br> PetaLibrary's automated .snapshots retain deleted or modified data for up to 7 days so it can be recovered if needed. Because retained snapshots consume a portion of an allocatin's storage space, deleting files will not immediately free up space until those snapshots rotate out. <br> <br> If freeing the storage is urgent, consider increasing the allocation's size or submitting a help ticket to the user support team. <br> <br>"
+  response = "<b>Correct!</b> <br> PetaLibrary's automated .snapshots retain deleted or modified data for up to 7 days so it can be recovered if needed. Because retained snapshots consume a portion of an allocation's storage space, deleting files will not immediately free up space until those snapshots rotate out. <br> <br> If freeing the storage is urgent, consider increasing the allocation's size or submitting a help ticket to the user support team. <br> <br>"
 } else if("@input" === "2"){
   response = "<b>Note Quite.</b> <br> The annual renewal period (aligned with the university's fiscal year) applies strictly to billing; it does not reset or alter how the system reports your allocation's data usage. <br> <br>"
 } else if("@input" === "3"){
@@ -803,7 +764,7 @@ To avoid delays, choose an initial size that accounts for both current data need
 
 Only the owner of an allocation may transfer ownership to another eligible faculty member or researcher. 
 
-In the event a former PetaLibrary owner is not available to designate a new owner, the owner of the speedtype that was last used to pay for a PetaLibrary allocation may designate a new owner.
+In the event a former PetaLibrary owner is not available to designate a new owner, the owner of the SpeedType that was last used to pay for a PetaLibrary allocation may designate a new owner.
 
 </details>
 
@@ -831,7 +792,7 @@ A research lab's PetaLibrary allocation is running low on storage, so the owner 
 
 <!-- data-solution-button="off" -->
 [( )] Allocation sizes are permanently locked after creation, so the owner must request a second allocation instead.
-[( )] The request cannot be fullfilled because it is too large. PetaLibrary allocations have a maximum size limit of 100 TB.
+[( )] The request cannot be fulfilled because it is too large. PetaLibrary allocations have a maximum size limit of 100 TB.
 [(X)] The request falls within the PetaLibrary size limit, but the change will not be instantaneous because it may require migrating the allocation to a different storage enclosure.
 <script>
 let response = ""
@@ -875,7 +836,7 @@ if ("@input" === "2") {
 
 If you have specific questions about CURC resources, please fill out our [support request form](https://colorado.service-now.com/req_portal?id=ucb_sc_rc_form).
 
-To learn more about Research Computing, con`sider:
+To learn more about Research Computing, consider:
 
 * Reading the [Online Documentation](https://curc.readthedocs.io/en/latest/getting_started/navigating_docs.html).
 * Attending a [Workshop Training Session or Consult Hours](https://curc.readthedocs.io/en/latest/getting_started/trainings_and_consults/index.html).
