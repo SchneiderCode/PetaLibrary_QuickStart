@@ -107,7 +107,7 @@ Welcome to the PetaLibrary! This interactive guide is designed for new Allocatio
 
 <div style="width:45%; margin: 15px 2.5%; float:left;">
 
-![Two researchers collaborate in a detailed cartoon data center featuring a central "PETALIBRARY" server. The high-capacity storage hub is smiling, with its side panel clearly showing "PETABYTES 100+ PB" amid other scientific data icons.](img/PetaLibrary_Banner.png)<!-- style="border:solid black 1px; border-radius: 15px;" -->
+![An illustration of a young "data owner" learning to manage their new storage allocation alongside an "IT guide" in a colorful, modern data center. A banner at the top reads 'Your PetaLibrary Journey Starts Here'.](img/Training_Banner.jpg)<!-- style="border:solid black 1px; border-radius: 15px;" -->
 
 </div>
 
