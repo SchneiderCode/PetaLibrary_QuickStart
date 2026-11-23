@@ -300,6 +300,12 @@ if ("@input" === "1") {
 
 ## Allocation Tier Review
 
+<script hidden>
+ let currentDate = new Date();
+  sendData({username: user_name, email: user_email, course:"PL_QUICKSTART_VISITS", question:"ALLOCATION_TIERS", value: currentDate.toLocaleString()})
+  "LIA: wait"
+</script>
+
 PetaLibrary offers different storage tiers tailored to specific research data lifecycles. Below you will find a brief overview of each tier and notes on their key features. For a more detailed comparison, please see [CURC's PetaLibrary documentation](https://curc.readthedocs.io/en/latest/petalibrary/allocation_types.html)
 
 <br>
@@ -470,6 +476,12 @@ if (check==2) {
 
 ## Common Data Operations
 
+<script hidden>
+ let currentDate = new Date();
+  sendData({username: user_name, email: user_email, course:"PL_QUICKSTART_VISITS", question:"DATA_OPERATIONS", value: currentDate.toLocaleString()})
+  "LIA: wait"
+</script>
+
 Once you have access to a PetaLibrary allocation, you will need to start working on managing your data operations. This section provides a quick overview for how you can transfer data to-and-from your allocation, share data with collaborators, and how to restore your data from snapshots.
 
 <br>
@@ -576,6 +588,13 @@ if ("@input" === "2") {
 
 
 ## Monitoring Data Usage
+
+<script hidden>
+ let currentDate = new Date();
+  sendData({username: user_name, email: user_email, course:"PL_QUICKSTART_VISITS", question:"MONITORING_USAGE", value: currentDate.toLocaleString()})
+  "LIA: wait"
+</script>
+
 The two primary methods for checking an allocation's storage usage are the `.cstats` report (exclusive to Active and Active+Archive tier allocations) or running the `df` terminal command. Examples and additional information for each are provided below. 
 
 <br>
@@ -644,19 +663,13 @@ pla-enc9:/srv/pl/active/curc  4.6T  2.4T  2.2T  52% /pl/active/curc
 
 ### ✏ Knowledge Check
 
-<div style="width:45%; margin: 15px 2.5%; float:left; ">
+{{0}}
+<div style="width:80%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 10%;" >
 
-![Two researchers collaborate in a detailed cartoon data center featuring a central "PETALIBRARY" server. The high-capacity storage hub is smiling, with its side panel clearly showing "PETABYTES 100+ PB" amid other scientific data icons.](img/PetaLibrary_Banner.png)<!-- style="border:solid black 1px; border-radius: 15px;" -->
-
-</div>
-
-
-<div style="width:40%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 2.5%;" >
-
-In checking his lab's allocation usage, Zane notices that the .cstats file it is completely blank. What does this likely mean?
+In checking his lab's allocation usage, Zane notices that the .cstats file is completely blank. What does this likely mean?
 
 <!-- data-solution-button="off" -->
-[( )] The hourly report has not run yet.
+[( )] The .cstats file has expired.
 [( )] Zane's access to the allocation has been revoked.
 [( )] Someone accidentally deleted the .cstats file's content.
 [(X)] The allocation is likely full.
@@ -664,13 +677,13 @@ In checking his lab's allocation usage, Zane notices that the .cstats file it is
 let response = ""
 
 if("@input" === "0" ){
-  response = "<b>Not Quite.</b> <br>  <br> <br>"
+  response = "<b>Not Quite.</b> <br> While the .cstats file never expires, its hourly updates will fail if your allocation runs out of space to save the updated file.  <br> <br>"
 } else if ("@input" === "1") {
-  response = "<b>Note Quite.</b> <br>  <br> <br>"
+  response = "<b>Note Quite.</b> <br> While the allocation owner or approved contacts can request changes to user access, adding or removing someone will not affect any files or data stored in the allocation. <br> <br>"
 } else if("@input" === "2"){
-  response = "<b>Note Quite.</b> <br>   <br> <br>"
+  response = "<b>Note Quite.</b> <br> The .cstats file is a read-only file managed by the system. This means individual lab members cannot edit or delete its contents.  <br> <br>"
 } else if("@input" === "3"){
-  response = "<b>Correct!</b> <br> While the .cstats file is fairly small, only a few KB in size, if an allocation is full then the system will be unable to properly update .cstats and result in an empty file. If this happens, please reach out to User Support for guidance through the <a href='https://colorado.service-now.com/req_portal?id=ucb_sc_rc_form'>online help form</a>. <br> <br>"
+  response = "<b>Correct!</b> <br> While the .cstats file is fairly small, only a few KB in size, if an allocation is full then the system will be unable to properly update .cstats and result in an empty file. If this happens, please reach out to the User Support Team for guidance through the <a href='https://colorado.service-now.com/req_portal?id=ucb_sc_rc_form'>online help form</a>. <br> <br>"
 }
 
 document.getElementById("data_usage_question_responses").innerHTML = response
@@ -691,17 +704,73 @@ if ("@input" === "3") {
 </div>
 <div style="clear:both"></div>
 
+{{1}}
+<div style="width:80%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 10%;" >
+
+After determining the lab's allocation is full, Zane decides to free up some storage space by deleting unused data from old experiments. Unfortunately, even after deleting the unused data, the allocation still seems to be listed as full. What might be the problem?
+
+<!-- data-solution-button="off" -->
+[( )] Only the technical contact for an allocation may permanently delete files.
+[(X)] The deleted data is still being retained in .snapshots, which hold files for up to 7 days and count toward the allocation's storage limit.
+[( )] Once an allocation's storage quota has been reached, the system will list it as full until the next billing cycle.
+[( )] None of the above  
+<script>
+let response = ""
+
+if("@input" === "0" ){
+  response = "<b>Not Quite.</b> <br> As long as appropriate file permissions are set, any member of a PetaLibrary allocation may create, edit, or even delete files. <br> <br>"
+} else if ("@input" === "1") {
+  response = "<b>Correct!</b> <br> PetaLibrary's automated .snapshots retain deleted or modified data for up to 7 days so it can be recovered if needed. Because retained snapshots consume a portion of an allocatin's storage space, deleting files will not immediately free up space until those snapshots rotate out. <br> <br> If freeing the storage is urgent, consider increasing the allocation's size or submitting a help ticket to the user support team. <br> <br>"
+} else if("@input" === "2"){
+  response = "<b>Note Quite.</b> <br> The annual renewal period (aligned with the university's fiscal year) applies strictly to billing; it does not reset or alter how the system reports your allocation's data usage. <br> <br>"
+} else if("@input" === "3"){
+  response = "<b>Note Quite. Try again</b> <br>"
+}
+
+document.getElementById("data_snapshot_question_responses").innerHTML = response
+
+if ("@input" === "1") {
+  let currentDate = new Date();
+  sendData({username: user_name, email: user_email, course:"PL_QUICKSTART_SCORES", question:"DATA_SNAPSHOTS", value: currentDate.toLocaleString()})
+  send.lia("true")
+} else {
+  send.lia("")
+}
+
+"LIA: wait"
+</script>
+
+<div id="data_snapshot_question_responses"></div>
+
+</div>
+<div style="clear:both"></div>
+
 
 ## Managing an Allocation
-The owner, or their designated contacts, can request changes to their allocation by submitting a request through the CURC portal (TODO - Add link). Below you will find additional information for common requests related to changing an allocation's size, its SpeedType, and its owner.
+
+<script hidden>
+ let currentDate = new Date();
+  sendData({username: user_name, email: user_email, course:"PL_QUICKSTART_VISITS", question:"MANAGING_ALLOC", value: currentDate.toLocaleString()})
+  "LIA: wait"
+</script>
+
+The owner, or their designated contacts, can request changes to their allocation by submitting a [help request](https://colorado.service-now.com/req_portal?id=ucb_sc_rc_form) to the User Support Team. Below you will find additional information for common requests related to changing an allocation's size, its SpeedType, and its owner.
 
 <br>
 
 <details>
 <summary>Changing an allocation's size</summary>
 
-Add note on limitations here - min is 1Tb, max 200TB, updates may require moving the allocation, try to pick an appropriate size that takes into consideration snapshot usage and current usage plans. 
+<div style="margin-left:5px;margin-right:5px">
 
+While PetaLibrary allocations are created with an initial size, that capacity can be adjusted as a research lab's needs evolve. Keep the following guidelines in mind when planning changes to an allocation's storage:
+
+* Size Limits: Allocations must be at least 1 TB and no larger than 200 TB.
+* Processing Time: Size changes are not instantaneous. Some adjustments require migrating the allocation to a different storage enclosure, which takes time to complete.
+
+To avoid delays, choose an initial size that accounts for both current data needs and automated snapshot usage.
+
+</div>
 </details>
 
 ---
@@ -709,7 +778,9 @@ Add note on limitations here - min is 1Tb, max 200TB, updates may require moving
 <details>
 <summary>Updating an allocation's SpeedType </summary>
 
-Add details for who can use SpeedTypes - internal CU users only. External require checks
+*For Colorado University system users,* PetaLibrary charges are billed to a university SpeedType. The listed SpeedType for a PetaLibrary allocation can be changed at any time. 
+
+*For users external to the Colorado University system,* PetaLibrary charges must be paid with a check. 
 
 > **Fiscal Year Renewals:** Allocations are renewed at the end of each University Fiscal Year (July 1). Invoices are sent to the Owner and Billing Contact. Always verify that billing information and the listed SpeedType are correct prior to renewal.
 
@@ -720,7 +791,9 @@ Add details for who can use SpeedTypes - internal CU users only. External requir
 <details>
 <summary>Changing Allocation Ownership</summary>
 
-Owners can transfer primary ownership of an allocation to another eligible faculty member or researcher by contacting CURC support.
+Only the owner of an allocation may transfer ownership to another eligible faculty member or researcher. 
+
+In the event a former PetaLibrary owner is not available to designate a new owner, the owner of the speedtype that was last used to pay for a PetaLibrary allocation may designate a new owner.
 
 </details>
 
@@ -731,27 +804,64 @@ Owners can transfer primary ownership of an allocation to another eligible facul
 
 <div style="margin-left:5px;margin-right:5px">
 
-When a collaborator or student leaves the university, take prompt action to secure data and transition responsibilities:
-* Request updates to UNIX group file permissions to revoke access for departed members.
-* Transfer ownership of specific files or datasets if another researcher is taking over lead analysis.
-* **POI Accounts:** If an external or departed collaborator still requires ongoing access, establish a University Person of Interest (POI) account to maintain authorized access securely.
+In the event a collaborator or student leaves the university, we recommend the considering the following actions:
+* **Group File Permissions**: The departee should updated group file permissions (e.g. `chmod g+w <file_name>`). This ensures others can use the files they have created after they have left. If the departee is unable to modify group file permissions, please contact the User Support Team for assistance.
+* **PetaLibrary Access:** To rescinded the departee's access to the allocation, please submit a help ticket with the User Support Team.
+* **POI Accounts:** If an external or departed collaborator still requires ongoing access, consider establishing a University Person of Interest (POI) account. Additional information on POI accounts can be found in [OIT's online documentation](https://oit.colorado.edu/accounts/persons-of-interest).
 
 </div>
 
 </details>
 
+### ✏ Knowledge Check
 
+<div style="width:80%; border: solid black 1px; padding:10px; border-radius: 15px; float:left; margin: 15px 10%;" >
+
+A research lab's PetaLibrary allocation is running low on storage, so the owner submits a help request to increase its capacity from 50 TB to 150 TB. According to the documentation, what should the owner expect?
+
+<!-- data-solution-button="off" -->
+[( )] Allocation sizes are permanently locked after creation, so the owner must request a second allocation instead.
+[( )] The request cannot be fullfilled because it is too large. PetaLibrary allocations have a maximum size limit of 100 TB.
+[(X)] The request falls within the PetaLibrary size limit, but the change will not be instantaneous because it may require migrating the allocation to a different storage enclosure.
+<script>
+let response = ""
+
+if("@input" === "0" ){
+  response = "<b>Not Quite.</b> <br> An allocation's size can be changed after it is created. This includes both increases and decreases in size. <br> <br>"
+} else if ("@input" === "1") {
+  response = "<b>Note Quite.</b> <br> PetaLibrary allocations have a maximum size of 200TB and a minimum size of 1TB. <br> <br>"
+} else if("@input" === "2"){
+  response = "<b>Correct!</b> <br> Because PetaLibrary allocations reside on a shared storage system, changing an allocation's size may require additional backend work to maintain an optimal system configuration. If extra work is needed, the User Support Team will notify you and keep you updated on the expected timeline before your request is fulfilled. <br> <br>"
+} 
+
+document.getElementById("manage_alloc_question_responses").innerHTML = response
+
+if ("@input" === "2") {
+  let currentDate = new Date();
+  sendData({username: user_name, email: user_email, course:"PL_QUICKSTART_SCORES", question:"MANAGE_ALLOC", value: currentDate.toLocaleString()})
+  send.lia("true")
+} else {
+  send.lia("")
+}
+
+"LIA: wait"
+</script>
+
+<div id="manage_alloc_question_responses"></div>
+
+</div>
+<div style="clear:both"></div>
 
 ## Conclusion
 
 <script hidden>
  let currentDate = new Date();
-  sendData({username: user_name, email: user_email, course:"PETALIBRARY_VISITS", question:"CONCLUSION", value: currentDate.toLocaleString()})
+  sendData({username: user_name, email: user_email, course:"PL_QUICKSTART_VISITS", question:"CONCLUSION", value: currentDate.toLocaleString()})
   "LIA: wait"
 </script>
 
 
-**Congratulations! You have completed CURC's PetaLibrary Training!**
+**Congratulations! You have completed CURC's PetaLibrary Quick Start Guide!**
 
 If you have specific questions about CURC resources, please fill out our [support request form](https://colorado.service-now.com/req_portal?id=ucb_sc_rc_form).
 
@@ -776,7 +886,7 @@ Please let us know how useful you found this online training:
   let choices = @input;
   for (const [key, value] of Object.entries(choices)) {
     if(value === 1){
-      sendData({username: user_name, email: user_email, course:"PETALIBRARY_SCORES", question:"REVIEW_SCORE", value: key })
+      sendData({username: user_name, email: user_email, course:"PL_QUICKSTART_SCORES", question:"REVIEW_SCORE", value: key })
       send.lia("Feedback Sent", [], false)
       break;
     }
